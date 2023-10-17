@@ -60,15 +60,6 @@ ul.navbar li a:hover {
     border-color: black;
 }
 
-#wrapper::before {
-    content: "My Wrapper";
-    position: absolute;
-    top: -10px;
-    left: 10px;
-    background-color: #FFF;
-    padding: 0 10px;
-    font-size: 14px;
-}
 select{
     display: block; /* makes the dropdown list stack ontop of each other */
     width: 40%;
@@ -103,7 +94,7 @@ $dbname = "benners_pasta";
   <nav>
     <ul class='navbar'>
       <li><a href="index.html">Home</a></li>
-      <li><a href="order.html">Order Now</a></li>
+      <li><a href="order.php">Order Now</a></li>
       <li><a href="">Track Order</a></li>
       <li><a href="">Checkout</a></li>
 	</ul>
