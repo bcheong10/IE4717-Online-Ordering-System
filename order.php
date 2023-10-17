@@ -4,10 +4,13 @@
 <title>Pasta!</title>
 <meta charset="utf-8">
 <style>
+a{
+    text-decoration: none;
+    color: white;
+}
 nav {
     background-color: rgba(0, 0, 0, 0.7); /* Translucent black background */
     overflow: hidden;
-    
 }
 
 ul.navbar {
@@ -34,40 +37,119 @@ ul.navbar li a:hover {
     background-color: rgba(255, 255, 255, 0.2); 
     color: black;
 }
+#button_container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-#order_button{
+#button_container #buttons{
     background-color: rgba(0, 0, 0, 0.7); /* Translucent black background */
+    display: block;
     color: white;
     padding: 10px 20px; 
-    display: inline-block;
     border-radius: 10px;
+    width: 160px; /* Set the desired width */
+    height: 50px; /* Set the desired height */
+    font-size: 17px;
     border: none;
-    font-size: 20px;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
-    position: fixed;
-    bottom: 20%; /* Adjust this value to control vertical positioning */
-    left: 50%;
-    transform: translateX(-50%); /* Center the button horizontally */
 }
 #wrapper{
     margin: 35px 20px 20px 20px;
-    width: 90%;
+    min-width: 90%;
     height: 500px;
-    padding: 20px;
+    padding: 10px;
     border: 2px solid #333;
+    border-radius: 10px;
+    border-color: black;
+    position: relative;
+}
+
+#menu_label{
+    position: absolute;
+    font-size: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: white;
+    margin-left: 18px; 
+    z-index: 1;
+    font-weight: bold;
+    top: -42px;
+}
+
+#left_column{
+    float: left;
+    padding: 45px 0 0 18px;
+    width: 49%;
+    border: none;
     border-radius: 10px;
     border-color: black;
 }
 
 select{
     display: block; /* makes the dropdown list stack ontop of each other */
-    width: 40%;
+    width: 90%;
     margin: 20px 0 10px 5px;
     padding: 16px 20px;
     border: none;
     border-radius: 10px;
     background-color: #f1f1f1;
+}
+
+#subtotal{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#price_label{
+    position: absolute;
+    font-size: 20px; 
+    background-color: white;
+    margin-left: 18px; 
+    z-index: 1;
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#price{
+    position: absolute;
+    font-size: 20px; 
+    background-color: white; 
+    border: solid 1px #333;
+    padding: 24px;
+    padding-right: 88px;
+    margin-top: 30px;
+    z-index: 0;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+
+#right_column{
+    display: flex;
+    flex-direction: column;
+    padding: 45px 0 0 0;
+    float: right;
+    width: 40%;
+    
+    border: none;
+    border-radius: 10px;
+    border-color: black;
+    margin-right: 60px;
+}
+
+#spe_req_tb{
+    display: block;
+    margin: 0 0 10px;
+    border: solid 1px #333;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    font-size: 14px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 </style> 
@@ -102,6 +184,8 @@ $dbname = "benners_pasta";
   </header>
 
   <div id="wrapper">
+  <p id="menu_label">Menu</p>
+    <div id="left_column">
     <label for="pasta_drop"></label>
     <select style="margin-top: 0px;" id="pasta_drop" name="pasta_drop">
     <option value="" disabled selected>Choose type of pasta</option>
@@ -172,6 +256,27 @@ $dbname = "benners_pasta";
         ?>
     </select>
 
+    <br>
+    <div id="subtotal">
+        <p id="price_label">Subtotal</p>
+        <p id="price">$6.70</p>
+    </div>
+
+    </div>
+
+    <div id="right_column">
+        <textarea id="spe_req_tb" rows=16 cols=78 type="text" placeholder="Special Requirements"></textarea>
+       <br>
+        <div id="button_container">
+            <button id="buttons" type="button">Add to Cart</button><br>
+            <!-- change the color of the button here -->
+            <a href="checkout.html"><button id="buttons" style="background-color: #122332;" type="button">Go To Checkout</button></a>
+        </div>
+        
+        
+    
+    
+    </div>
 
 
   </div>
