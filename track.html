@@ -114,14 +114,12 @@ ul.navbar li a:hover {
   </nav>
   </header>
 
-  <form action="confirmation.html">
+  <form action="confirmation.php" method="post">
   <div id="wrapper">
   <p id="track_label">Track Your Order</p>
 
-  
-
-  <input type="text" id="track_tb" placeholder="Enter your order number here">
-    <a href="confirmation.html"><button id="buttons">Track</button></a>
+  <input type="text" id="track_tb" name="email" placeholder="Enter your email here">
+    <input type="submit" id="buttons" value="Track">
   </div>
 </form>
 

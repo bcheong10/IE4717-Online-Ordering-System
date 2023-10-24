@@ -60,8 +60,8 @@ ul.navbar li a:hover {
 }
 
 #wrapper{
-    width: 50%;
-    height: 500px;
+    width: 25%;
+    height: 450px;
     margin: 0 auto;
     margin-top: 35px;
     padding: 10px;
@@ -95,10 +95,60 @@ ul.navbar li a:hover {
 </head>
 
 <body>
+
+<?php
+date_default_timezone_set('Asia/Singapore');
+
+$email = $_POST["email"];
+
+// Establish a connection to your local database (replace with your own credentials)
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "benners_pasta";
+
+// Create connection
+@ $conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+// Query to fetch data from the database (replace with your own query)
+$sql_1 = "select timestamp from orders where email = '$email'";
+$sql_2 = "select order_id from orders where email = '$email'";
+$result_timestamp = $conn->query($sql_1)->fetch_all();
+$result_order_id = $conn->query($sql_2)->fetch_all();
+
+$order_timestamp = end($result_timestamp);
+$order_timestamp = $order_timestamp[0];
+$order_timestamp = new DateTime($order_timestamp);
+
+$order_id = end($result_order_id);
+$order_id = $order_id[0];
+
+$current_timestamp = new DateTime("now");
+
+$time_diff = $order_timestamp->diff($current_timestamp); 
+$time_check = $time_diff->format('%H');
+
+$time_elapsed = $time_diff->format('%i minutes');
+
+if (floatval($time_check) > 0) {
+    $order_id = "Queue number has expired!"; 
+    $time_elapsed = "Time elapsed: > 1 hour";
+}
+
+else {
+    $order_id = "Queue Number: $order_id"; 
+    $time_elapsed = "Time elapsed: $time_elapsed";
+}
+
+
+?>
+
   <header>
   <nav>
     <ul class='navbar'>
-      <li><a href="index.html">Home</a></li>
+      <li><a href="index.php">Home</a></li>
       <li><a href="order.php">Order Now</a></li>
       <li><a href="track.html">Track Order</a></li>
       <li><a href="checkout.php">Checkout</a></li>
@@ -111,10 +161,12 @@ ul.navbar li a:hover {
   <p id="wrapper_label">Thank You!</p>
 
   <div class="content">
-    <h1>Your order has been confirmed and is sent to the kitchen...</h1>
+    <h1>Queue Ticket</h1>
     <br>
-    <h2 style="font-size: 50px;">
-        echo queue number
+    <h2 style="font-size: 30px;">
+        <?php echo $order_id ?><br><br>
+        <?php echo $time_elapsed ?> <br><br>
+
     </h2>
   </div>
 

@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Pasta!</title>
+<title>Pasta Board!</title>
 <meta charset="utf-8">
 <style>
+
+body {
+    background-color: black;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width:
+}
+
 nav {
     background-color: rgba(0, 0, 0, 0.7); /* translucent black background */
     overflow: hidden;
@@ -76,21 +88,22 @@ ul.navbar li a:hover {
       <li><a href="index.php">Home</a></li>
       <li><a href="order.php">Order Now</a></li>
       <li><a href="track.html">Track Order</a></li>
-      <li><a href="checkout.html">Checkout</a></li>
+      <li><a href="checkout.php">Checkout</a></li>
 	</ul>
   </nav>
   </header>
     <?php 
     
     ?>
-  <h1 style="text-align: center; font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif">
-    Fresh Pasta Made Daily!!!!!!!!!!!1</h1>
+<div class='main'>
+<img src="assets/logo.png" alt="logo" class="logo">
 <form id="order_form" action="order.php" method="post">
     <!--start session state here-->
     <input type="email" id="email" name="email" placeholder="Enter your email..">
 
     <input id='order_button' type="submit" name="order" value="Order Now">
 </form>
+<div>
 
 </body>
 
