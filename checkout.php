@@ -183,7 +183,7 @@ ul.navbar li a:hover {
 
 <?php 
     session_start();
-    echo 'sss'; ?>
+    echo $_SESSION["user_email"]; ?>
 
 <body>
   <header>
