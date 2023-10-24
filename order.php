@@ -175,7 +175,8 @@
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
+    session_start();
+    $_SESSION["user_email"] = $_POST['email'];
 
     ?>
     <script src="update_price.js"></script>
@@ -186,7 +187,7 @@
     <header>
         <nav>
             <ul class='navbar'>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.php">Home</a></li>
                 <li><a href="order.php">Order Now</a></li>
                 <li><a href="track.html">Track Order</a></li>
                 <li><a href="checkout.php">Checkout</a></li>

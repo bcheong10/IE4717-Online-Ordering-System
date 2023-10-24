@@ -181,11 +181,15 @@ ul.navbar li a:hover {
 
 </head>
 
+<?php 
+    session_start();
+    echo 'sss'; ?>
+
 <body>
   <header>
   <nav>
     <ul class='navbar'>
-      <li><a href="index.html">Home</a></li>
+      <li><a href="index.php">Home</a></li>
       <li><a href="order.php">Order Now</a></li>
       <li><a href="track.html">Track Order</a></li>
       <li><a href="checkout.php">Checkout</a></li>
