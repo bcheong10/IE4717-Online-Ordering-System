@@ -1,9 +1,8 @@
 <?php
+session_start();
 
-$pasta = $_POST['pasta_drop'];
-$meat = $_POST['meat_drop'];
-$veg = $_POST['veg_drop'];
-$base = $_POST['base_drop'];
+$cart = $_SESSION['cart'];
+var_dump($_SESSION);
 
 ?>
 <!DOCTYPE html>
@@ -167,23 +166,19 @@ ul.navbar li a:hover {
 #items_summary{
     display: flex; 
     flex-direction: column;
-    margin: 10px 0 0 20px;
+    margin-top: 10px;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-#items_summary ul li{
-    font-size: 30px;
-    padding: 20px 0 0 0;
+
+#order_details{
+    font-size: 1.1rem;
     
 }
 
 </style> 
 
 </head>
-
-<?php 
-    session_start();
-    echo $_SESSION["user_email"]; ?>
 
 <body>
   <header>
@@ -216,10 +211,21 @@ ul.navbar li a:hover {
 
     <div id="items_summary">
         <ul>
-            <li><?php echo $pasta?></li>
-            <li><?php echo $base?></li>
-            <li><?php echo $meat?></li>
-            <li><?php echo $veg?></li>
+            <?php 
+                if(count($cart) > 0){
+                    for ($i = 0; $i < count($cart); $i++) {
+                        echo "<li style='font-size: 25px; margin-bottom: 15px;'> Order ".($i+1).": $".$cart[$i][5]."<ul id='order_details'>"
+                        ."<li>".$cart[$i][0] ."</li>".
+                        "<li>".$cart[$i][1]."</li>".
+                        "<li>".$cart[$i][2]."</li>".
+                        "<li>".$cart[$i][3]."</li>".
+                        "</ul>".
+                        "</li>";  
+                    }
+                }else{
+                    echo "Nothing in cart!";
+                }
+            ?>
         </ul>
     </div>
 
