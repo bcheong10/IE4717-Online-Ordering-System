@@ -1,3 +1,40 @@
+<?php
+    session_start();
+    
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "benners_pasta";
+
+    @$conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+    
+    
+
+    if (isset($_GET['pasta_drop']) && $_GET['base_drop'] && $_GET['meat_drop'] && $_GET['veg_drop']) {
+        
+        $pasta = explode(",", $_GET['pasta_drop']);
+        $base = explode(",", $_GET['base_drop']);
+        $meat = explode(",", $_GET['meat_drop']);
+        $veg = explode(",", $_GET['veg_drop']);
+        $spe_req = $_GET['spe_req_tb'];
+        $subtotal = $pasta[1] + $base[1] + $meat[1] + $veg[1];
+        $cart_item = array($pasta[0], $base[0], $meat[0], $veg[0], $spe_req, $subtotal);
+        array_push($_SESSION['cart'], $cart_item);
+        header("Location: ".$_SERVER['PHP_SELF']);
+    }
+
+    var_dump($_SESSION['cart']);
+    
+
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -164,21 +201,6 @@
         }
     </style>
 
-    <?php
-
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "benners_pasta";
-
-    @$conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    session_start();
-    $_SESSION["user_email"] = $_POST['email'];
-
-    ?>
     <script src="update_price.js"></script>
 
 </head>
@@ -195,20 +217,21 @@
         </nav>
     </header>
 
-    <form method="POST" action="checkout.php">
+    <form method="GET" >
 
         <div id="wrapper">
             <p id="menu_label">Menu</p>
             <div id="left_column">
                 <label for="pasta_drop"></label>
                 <select style="margin-top: 0px;" id="pasta_drop" name="pasta_drop" onchange="updatePriceLabel()">
-                    <option value=0 disabled selected>Choose type of pasta</option>
+                    <option value="0,0" disabled selected>Choose type of pasta</option>
                     <?php
                     $sql = "select * from pasta";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='" . $row["pasta_price"] . "'>" . $row["pasta_name"] . " - $" . $row["pasta_price"] . "</option>";
+                            echo "<option value='".$row["pasta_name"].",".$row["pasta_price"] . "'>" . $row["pasta_name"] . " - $" . $row["pasta_price"] . "</option>";
+                            
                         }
                     } else {
                         echo "No results found.";
@@ -219,14 +242,14 @@
 
                 <label for="base_drop"></label>
                 <select id="base_drop" name="base_drop" onchange="updatePriceLabel()">
-                    <option value=0 disabled selected>Choose base</option>
+                    <option value="0,0" disabled selected>Choose base</option>
                     <?php
                     $sql = "select * from base";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='" . $row["base_price"] . "'>" . $row["base_name"] . " - $" . $row["base_price"] . "</option>";
-                        }
+                            echo "<option value='".$row["base_name"].",".$row["base_price"] . "'>" . $row["base_name"] . " - $" . $row["base_price"] . "</option>";
+                          }
                     } else {
                         echo "No results found.";
                     }
@@ -235,13 +258,13 @@
 
                 <label for="meat_drop"></label>
                 <select id="meat_drop" name="meat_drop" onchange="updatePriceLabel()">
-                    <option value=0 disabled selected>Choose meat</option>
+                    <option value="0,0" disabled selected>Choose meat</option>
                     <?php
                     $sql = "select * from meat";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='" . $row["meat_price"] . "'>" . $row["meat_name"] . " - $" . $row["meat_price"] . "</option>";
+                            echo "<option value='".$row["meat_name"].",".$row["meat_price"] . "'>" . $row["meat_name"] . " - $" . $row["meat_price"] . "</option>";
                         }
                     } else {
                         echo "No results found.";
@@ -252,13 +275,13 @@
 
                 <label for="veg_drop"></label>
                 <select id="veg_drop" name="veg_drop" onchange="updatePriceLabel()">
-                    <option value=0 disabled selected>Choose vegetables</option>
+                    <option value="0,0" disabled selected>Choose vegetables</option>
                     <?php
                     $sql = "select * from vegetables";
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='" . $row["veg_price"] . "'>" . $row["veg_name"] . " - $" . $row["veg_price"] . "</option>";
+                            echo "<option value='".$row["veg_name"].",".$row["veg_price"] . "'>" . $row["veg_name"] . " - $" . $row["veg_price"] . "</option>";
                         }
                     } else {
                         echo "No results found.";
@@ -276,11 +299,11 @@
             </div>
 
             <div id="right_column">
-                <textarea id="spe_req_tb" rows=14 cols=78 type="text" placeholder="Special Requirements"></textarea>
+                <textarea id="spe_req_tb" name="spe_req_tb" rows=14 cols=78 type="text" placeholder="Special Requirements"></textarea>
                 <br>
                 <div id="button_container">
-                    <button id="buttons" type="button">Add to Cart</button><br>
-                    <input type="submit" id="buttons" name="submit" value="Go To Checkout">
+                    <button id="buttons" type="submit">Add To Cart</button><br>
+                    <button id="buttons"><a href='checkout.php'>Checkout</a></button>
                 </div>
 
 
