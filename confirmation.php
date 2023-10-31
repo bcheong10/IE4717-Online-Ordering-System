@@ -118,6 +118,12 @@ $sql_2 = "select order_id from orders where email = '$email'";
 $result_timestamp = $conn->query($sql_1)->fetch_all();
 $result_order_id = $conn->query($sql_2)->fetch_all();
 
+if (count($result_order_id) == 0) {
+    echo '<script> alert("Email does not exist. Please enter a valid email"); 
+    window.location.href="track.html"; </script>';
+    exit();
+}
+
 $order_timestamp = end($result_timestamp);
 $order_timestamp = $order_timestamp[0];
 $order_timestamp = new DateTime($order_timestamp);

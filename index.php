@@ -43,7 +43,7 @@ ul.navbar li a {
 }
 
 ul.navbar li a:hover {
-    background-color: rgba(255, 255, 255, 0.2); 
+    background-color: white; 
     color: black;
 }
 
@@ -58,9 +58,14 @@ ul.navbar li a:hover {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 
     position: fixed;
-    bottom: 20%; /* adjust to control button y-positioning */
+    bottom: 10%; /* adjust to control button y-positioning */
     left: 50%;
     transform: translateX(-50%); /* center the button x-pos */
+}
+
+#order_button:hover {
+    background-color: white;
+    color: black;
 }
 
 #email{
@@ -97,12 +102,13 @@ ul.navbar li a:hover {
     ?>
 <div class='main'>
 <img src="assets/logo.png" alt="logo" class="logo">
-<form id="order_form" action="order.php" method="post">
+<!-- <form id="order_form" action="order.php" method="post"> -->
     <!--start session state here-->
-    <input type="email" id="email" name="email" placeholder="Enter your email..">
-
-    <input id='order_button' type="submit" name="order" value="Order Now">
-</form>
+    <!-- <input type="email" id="email" name="email" placeholder="Enter your email.."> -->
+<a href="order.php">
+<button id='order_button' type="button"> Order Now </button>
+</a>
+<!-- </form> -->
 <div>
 
 </body>
