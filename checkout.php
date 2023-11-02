@@ -7,7 +7,7 @@ var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <script src='functions.js'></script>
+<script src='functions.js'></script>
 
 <head>
     <title>Pasta!</title>
@@ -53,10 +53,14 @@ var_dump($_SESSION);
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-top: 45px;
+            margin-left: 350px;
         }
 
         #button_container #buttons {
             background-color: rgba(0, 0, 0, 0.7);
+            margin-top: 5px;
+            margin-left: 50px;
             /* Translucent black background */
             display: block;
             color: white;
@@ -146,20 +150,18 @@ var_dump($_SESSION);
         }
 
         .details_tb {
-            display: block;
             margin: 10px 0 0 20px;
             border: solid 1px #333;
             border-radius: 10px;
             background-color: #f1f1f1;
             font-size: 16px;
             padding-left: 6px;
-            width: 80%;
+            width: 100%;
             height: 30px;
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         }
 
         .secret_details_tb {
-            display: block;
             margin: 10px 0 0 20px;
             border: solid 1px #333;
             border-radius: 10px;
@@ -184,13 +186,43 @@ var_dump($_SESSION);
 
         }
 
+        table input:valid {
+            background-color: palegreen;
+        }
+
+        table input:invalid {
+            background-color: lightpink;
+        }
+
+        table {
+            margin-top: 20px;
+            margin-left: 15px;
+            width: 85%;
+        }
+
+        td:has(label) {
+            width: 25%;
+        }
+
+        .submit {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            bottom: 10%;
+            /* adjust to control button y-positioning */
+            left: 50%;
+        }
+
         #subtotal {
             display: flex;
             flex-direction: column;
             position: relative;
-            margin-left: 20px;
-            margin-top: 90px;
-
+            margin-left: 50px;
         }
 
         #price_label {
@@ -229,7 +261,6 @@ var_dump($_SESSION);
             /* Translucent black background */
             display: block;
             color: white;
-            margin-top: 50px;
             padding: 10px 20px;
             border-radius: 10px;
             width: 160px;
@@ -260,24 +291,46 @@ var_dump($_SESSION);
     <div id="wrapper">
         <div id="left_column">
             <p id="customer_info_label">Customer Info</p>
+            <br>
+            <form>
+                <table>
+                    <tr>
+                        <td><label for="name">Name: </label></td>
+                        <td><input id="name" type="text" class="details_tb" maxlength="32" pattern="[A-Za-z ]{1,32}" required></td>
+                    </tr>
 
-            <input type="text" class="details_tb" style="margin-top: 29px" placeholder="Cardholder's Name">
-            <input type="text" class="details_tb" placeholder="Card Number">
+                    <tr>
+                        <td><label for="card">Card Number: </label></td>
+                        <td><input id="card" type="text" minlength="16" maxlength="16" class="details_tb" inputmode="numeric" pattern="[0-9\s]{13,16}" placeholder="xxxx xxxx xxxx xxxx" required></td>
+                    </tr>
 
-            <input type="month" class="secret_details_tb" style="width: 30%; margin-top: 29px" placeholder="MM/YY">
-            <!--maybe use regex?-->
-            <input type="text" class="secret_details_tb" style="width: 30%; margin-top: 29px" placeholder="CVV">
-            <input type="email" class="details_tb" style="margin-top: 29px" placeholder="Email">
+                    <tr>
+                        <td><label for="cardexp">Card Expiry: </label></td>
+                        <td><input style="width: 50%;" id="cardexp" min="" type="month" class="secret_details_tb" style="" placeholder="MM/YY" required></td>
+                    </tr>
 
-            <div id="subtotal">
-                <p id="price_label">Subtotal</p>
-                <p id="price">$0.00</p>
-            </div>
+                    <tr>
+                        <td><label for="cvv">CVV: </label></td>
+                        <td><input id="cvv" type="password" maxlength="3" pattern="[0-9\s]{3}" class="secret_details_tb" style placeholder="xxx" required></td>
+                    </tr>
 
-            <div id="button_container">
-                    <button id="buttons" onclick="clearCart();">Clear Order</button><br>  
-            </div>
-
+                    <tr>
+                        <td><label for="email">Email: </label></td>
+                        <td><input id="email" type="email" class="details_tb" placeholder="Email" required></td>
+                    </tr>
+                </table>
+                <div style="text-align: center; margin-top: 60px;">
+                    <input class="submit" type="submit" value="Submit">
+                    
+                    <div id="subtotal">
+                        <p id="price_label">Subtotal</p>
+                        <p id="price">$0.00</p>
+                    </div>
+                    <div id="button_container">
+                        <button id="buttons" type="button"><a href='clear_cart.php'>Clear Cart</a></button><br>
+                </div>
+                </div>
+            </form>
         </div>
 
         <div id="right_column">
