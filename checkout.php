@@ -202,6 +202,7 @@ ul.navbar li a:hover {
     <input type="month" class="secret_details_tb" style="width: 30%; margin-top: 29px" placeholder="MM/YY"> 
     <!--maybe use regex?-->
     <input type="text" class="secret_details_tb" style="width: 30%; margin-top: 29px" placeholder="CVV">
+    <input type="email" class="details_tb" style="margin-top: 29px" placeholder="Email">
 
     </div>
 
