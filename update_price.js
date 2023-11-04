@@ -11,6 +11,6 @@ function updatePriceLabel() {
     var veg_price = veg_string.split(",")[1];
 
 
-    document.getElementById('price').innerText = "$" + String(parseFloat(pasta_price) + parseFloat(base_price) + 
-                                                parseFloat(meat_price) + parseFloat(veg_price));
+    document.getElementById('price').innerText = "$" + String((parseFloat(pasta_price) + parseFloat(base_price) + 
+                                                parseFloat(meat_price) + parseFloat(veg_price)).toFixed(2));
 }

@@ -1,8 +1,16 @@
 <?php
 session_start();
 
-$cart = $_SESSION['cart'];
-var_dump($_SESSION);
+if (isset($_SESSION['cart'])) {
+    $cart = $_SESSION['cart'];
+    
+    foreach($cart as $item){
+        $subtotal += $item[5];
+    }
+} else{
+    $subtotal = 0;
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -20,7 +28,6 @@ var_dump($_SESSION);
 
         nav {
             background-color: rgba(0, 0, 0, 0.7);
-            /* Translucent black background */
             overflow: hidden;
         }
 
@@ -283,7 +290,7 @@ var_dump($_SESSION);
                 <li><a href="index.php">Home</a></li>
                 <li><a href="order.php">Order Now</a></li>
                 <li><a href="track.html">Track Order</a></li>
-                <li><a href="checkout.php">Checkout</a></li>
+                <li><a href="checkout.php">Cart</a></li>
             </ul>
         </nav>
     </header>
@@ -292,7 +299,7 @@ var_dump($_SESSION);
         <div id="left_column">
             <p id="customer_info_label">Customer Info</p>
             <br>
-            <form>
+            <form method='POST' action='confirmation.php'>
                 <table>
                     <tr>
                         <td><label for="name">Name: </label></td>
@@ -316,7 +323,7 @@ var_dump($_SESSION);
 
                     <tr>
                         <td><label for="email">Email: </label></td>
-                        <td><input id="email" type="email" class="details_tb" placeholder="Email" required></td>
+                        <td><input name='email' id="email" type="email" class="details_tb" placeholder="Email" required></td>
                     </tr>
                 </table>
                 <div style="text-align: center; margin-top: 60px;">
@@ -324,10 +331,15 @@ var_dump($_SESSION);
                     
                     <div id="subtotal">
                         <p id="price_label">Subtotal</p>
-                        <p id="price">$0.00</p>
+                        <p id="price">$<?php if($subtotal != 0){
+                            echo $subtotal;
+                        } else{
+                            echo "0.00";
+                        
+                        } ?></p>
                     </div>
                     <div id="button_container">
-                        <button id="buttons" type="button"><a href='clear_cart.php'>Clear Cart</a></button><br>
+                        <a href='clear_cart.php'><button id="buttons" type="button">Clear Cart</button></a><br>
                 </div>
                 </div>
             </form>

@@ -1,39 +1,39 @@
 <?php
-    session_start();
-    
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "benners_pasta";
+session_start();
 
-    @$conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
-    
-    
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "benners_pasta";
 
-    if (isset($_GET['pasta_drop']) && $_GET['base_drop'] && $_GET['meat_drop'] && $_GET['veg_drop']) {
-        
-        $pasta = explode(",", $_GET['pasta_drop']);
-        $base = explode(",", $_GET['base_drop']);
-        $meat = explode(",", $_GET['meat_drop']);
-        $veg = explode(",", $_GET['veg_drop']);
-        $spe_req = $_GET['spe_req_tb'];
-        $subtotal = $pasta[1] + $base[1] + $meat[1] + $veg[1];
-        $cart_item = array($pasta[0], $base[0], $meat[0], $veg[0], $spe_req, $subtotal);
-        array_push($_SESSION['cart'], $cart_item);
-        header("Location: ".$_SERVER['PHP_SELF']);
-    }
+@$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-    var_dump($_SESSION['cart']);
-    
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+}
 
-    ?>
+
+
+if (isset($_GET['pasta_drop']) && $_GET['base_drop'] && $_GET['meat_drop'] && $_GET['veg_drop']) {
+
+    $pasta = explode(",", $_GET['pasta_drop']);
+    $base = explode(",", $_GET['base_drop']);
+    $meat = explode(",", $_GET['meat_drop']);
+    $veg = explode(",", $_GET['veg_drop']);
+    $spe_req = $_GET['spe_req_tb'];
+    $subtotal = $pasta[1] + $base[1] + $meat[1] + $veg[1];
+    $cart_item = array($pasta[0], $base[0], $meat[0], $veg[0], $spe_req, $subtotal);
+    array_push($_SESSION['cart'], $cart_item);
+    header("Location: " . $_SERVER['PHP_SELF']);
+
+}
+
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,13 +78,14 @@
             color: black;
         }
 
+
         #button_container {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        #button_container #buttons {
+        #button_container .buttons {
             background-color: rgba(0, 0, 0, 0.7);
             /* Translucent black background */
             display: block;
@@ -135,7 +136,6 @@
 
         select {
             display: block;
-            /* makes the dropdown list stack ontop of each other */
             width: 90%;
             margin: 20px 0 10px 5px;
             padding: 16px 20px;
@@ -212,12 +212,12 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="order.php">Order Now</a></li>
                 <li><a href="track.html">Track Order</a></li>
-                <li><a href="checkout.php">Checkout</a></li>
+                <li><a href="checkout.php">Cart</a></li>
             </ul>
         </nav>
     </header>
 
-    <form method="GET" >
+    <form method="GET">
 
         <div id="wrapper">
             <p id="menu_label">Menu</p>
@@ -230,8 +230,7 @@
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='".$row["pasta_name"].",".$row["pasta_price"] . "'>" . $row["pasta_name"] . " - $" . $row["pasta_price"] . "</option>";
-                            
+                            echo "<option value='" . $row["pasta_name"] . "," . $row["pasta_price"] . "'>" . $row["pasta_name"] . " - $" . $row["pasta_price"] . "</option>";
                         }
                     } else {
                         echo "No results found.";
@@ -248,8 +247,8 @@
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='".$row["base_name"].",".$row["base_price"] . "'>" . $row["base_name"] . " - $" . $row["base_price"] . "</option>";
-                          }
+                            echo "<option value='" . $row["base_name"] . "," . $row["base_price"] . "'>" . $row["base_name"] . " - $" . $row["base_price"] . "</option>";
+                        }
                     } else {
                         echo "No results found.";
                     }
@@ -264,7 +263,7 @@
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='".$row["meat_name"].",".$row["meat_price"] . "'>" . $row["meat_name"] . " - $" . $row["meat_price"] . "</option>";
+                            echo "<option value='" . $row["meat_name"] . "," . $row["meat_price"] . "'>" . $row["meat_name"] . " - $" . $row["meat_price"] . "</option>";
                         }
                     } else {
                         echo "No results found.";
@@ -281,7 +280,7 @@
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<option value='".$row["veg_name"].",".$row["veg_price"] . "'>" . $row["veg_name"] . " - $" . $row["veg_price"] . "</option>";
+                            echo "<option value='" . $row["veg_name"] . "," . $row["veg_price"] . "'>" . $row["veg_name"] . " - $" . $row["veg_price"] . "</option>";
                         }
                     } else {
                         echo "No results found.";
@@ -302,8 +301,8 @@
                 <textarea id="spe_req_tb" name="spe_req_tb" rows=14 cols=78 type="text" placeholder="Special Requirements"></textarea>
                 <br>
                 <div id="button_container">
-                    <button id="buttons" type="submit">Add To Cart</button><br>
-                    <button id="buttons"><a href='checkout.php'>Checkout</a></button>
+                    <button class="buttons" type="submit">Add To Cart</button><br>
+                    <input type="button" type="submit" class="buttons" onclick="window.location.href='checkout.php'" value="Checkout">
                 </div>
 
 

@@ -92,7 +92,7 @@ ul.navbar li a:hover {
       <li><a href="index.php">Home</a></li>
       <li><a href="order.php">Order Now</a></li>
       <li><a href="track.html">Track Order</a></li>
-      <li><a href="checkout.php">Checkout</a></li>
+      <li><a href="checkout.php">Cart</a></li>
 	</ul>
   </nav>
   </header>
